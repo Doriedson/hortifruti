@@ -1,0 +1,122 @@
+﻿<?php
+if( !isset($_SESSION) ) {
+	session_start();
+}
+
+include "cn.php";
+
+if ( isset( $_POST['del'] ) ) {
+	$sql="delete from tab_ordemcompraitem where id_ocitem=" . $_POST['del'];
+	$rs=$cn->query($sql);
+}
+
+if ( isset( $_POST['id_produto'] ) ) {
+
+	$sql="select tab_produto.* from tab_produto left join tab_codbar on tab_codbar.id_produto=tab_produto.id_produto where tab_produto.id_produto=" . $_POST['id_produto'] . " or tab_codbar.codbar=" . $_POST['id_produto'];
+	
+	if ( $rs=$cn->query($sql) ) {
+		if ($row=$rs->fetch_assoc()) {
+			
+			$tipo=$row['tipo'];
+			$qtd=0;
+			
+			$sql="select * from tab_estent where id_produto=" . $row['id_produto'] . " order by data desc limit 1;";
+		
+			if ( $rs=$cn->query($sql) ) {
+				if ($row=$rs->fetch_assoc()) {
+					$qtd=$row['qtdvol'];
+				}
+			}
+			
+			$sql="insert into tab_ordemcompraitem (id_oc,id_produto,qtdvol,vol1,vol2,tipo,custo,obs) values (" . $_POST['id'] . "," . $_POST['id_produto'] . ",$qtd,0,0,'$tipo',0,'')";
+			$rs=$cn->query($sql);
+
+		} else {
+			echo "<!--erro-->";
+			$cn->close();
+			return;
+		}
+	}
+}
+
+if ( isset( $_POST['cat'] ) ) {
+
+	$sql="insert into tab_ordemcompraitem (id_oc,id_produto,qtdvol,vol1,vol2,tipo,custo,obs) values (" . $_POST['id'] . ",-" . $_POST['cat'] . ",1," . $_POST['qtd'] . ",0,'',0,'" . strtoupper($_POST['produto']) . "')";
+	$rs=$cn->query($sql);
+}
+
+$sql="select * from tab_ordemcompra where id_oc=" . $_POST['id'];
+
+if ( $rs=$cn->query($sql) ) {
+	$row=$rs->fetch_assoc();
+
+	?>
+	<h1>:: Ordem de Compra - Itens (<input type="button" value="OCs" onclick="$('#content').load('ordem_compra.php');" />)</h1>
+
+	<p>Ordem: <?php echo $row['descricao']; ?><br />
+	Data: <?php echo date_format( date_create($row['data']), 'd/m/Y'); ?><br />
+	Obs.: <?php echo $row['obs']; ?><br /></p>	
+	<?php
+	
+	$sql="select * from tab_catctspag order by catctspag";
+
+	if ( $rs=$cn->query($sql) ) {
+		if ($row=$rs->fetch_assoc()) {
+
+			echo "<form method='post' onsubmit='return InsumoOC();' >Insumo: <input type='hidden' id='id' value='" . $_POST['id'] . "' /><select id='cat' autofocus>";
+		
+			do {
+				echo "<option value='" . $row['id_catctspag'] . "'>" . $row['catctspag'] . "</option>";
+			} while ($row=$rs->fetch_assoc());
+			
+			echo "</select> <input type='text' style='text-align:center;' id='qtd' maxlength='3' size='3' pattern='\d+(,\d{0,2})?' placeholder='Qtd' required /> ";
+			echo "<input type='text' id='produto' size='20' maxlength='100' required placeholder='Descrição' pattern='[A-Z a-z0-9]+' />";
+			echo " <input type='submit' value='Adicionar' /></form><br />";
+		} else {
+			echo "<p>Para adicionar insumos, cadastre uma categoria em Despesas.";
+		}
+	}
+	
+	echo "<form method='post' onsubmit='return ProdutoOC();' >Produto: <input type='hidden' id='id' value='" . $_POST['id'] . "' />";
+	echo "<input type='text' id='id_produto' size='13' maxlength='13' required placeholder='Código Produto' pattern='\d+' />";
+	echo " <input type='submit' value='Adicionar' /></form><br />";
+
+	echo "Lista de Compra: <input type='button' value='Adicionar' onclick=\"TINY.box.show({url:'add_lc.php',opacity:20,topsplit:3, post: 'id=" . $_POST['id'] . "'})\" /><br /><br />";
+	
+	$sql="select * from tab_ordemcompraitem left join tab_produto on tab_produto.id_produto=tab_ordemcompraitem.id_produto left join tab_catctspag on tab_catctspag.id_catctspag=-tab_ordemcompraitem.id_produto where tab_ordemcompraitem.id_oc=" . $_POST['id'];// . " order by tab_produto.produto";
+
+	if ( $rs=$cn->query($sql) ) {
+		if ( $row=$rs->fetch_assoc() ) {
+			
+			echo "<table><thead><tr><th>Produto</th><th>Vol 1</th><th>Vol 2</th><th>Qtd/Vol</th><th></th><th>Custo</th><th></th></tr></thead>";
+			
+			do {
+				if( is_null( $row['produto'] ) ) {
+					echo "<tr><td>" . $row['obs'] . "</td>";
+					echo "<td><input type='text' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOC(" . $row['id_ocitem'] . ",1,this);' style='text-align:center;' placeholder='" . number_format($row['vol1'],3,',','.') . "' /></td>";
+					echo "<td><input type='text' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOC(" . $row['id_ocitem'] . ",2,this);' style='text-align:center;' placeholder='" . number_format($row['vol2'],3,',','.') . "' /></td>";
+					echo "<td colspan='2'></td>";
+					echo "<td><input type='text' size='6' maxlength='6' pattern='\d+(,\d{0,2})?' onchange='ChangeOC(" . $row['id_ocitem'] . ",3,this);' style='text-align:center;' placeholder='" . number_format($row['custo'],2,',','.') . "' /></td>";
+				} else {
+					echo "<tr><td>" . $row['produto'] . "</td>";
+					echo "<td><input type='text' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOC(" . $row['id_ocitem'] . ",1,this);' style='text-align:center;' placeholder='" . number_format($row['vol1'],3,',','.') . "' /></td>";
+					echo "<td><input type='text' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOC(" . $row['id_ocitem'] . ",2,this);' style='text-align:center;' placeholder='" . number_format($row['vol2'],3,',','.') . "' /></td>";
+					echo "<td>x <input type='text' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOC(" . $row['id_ocitem'] . ",4,this);' style='text-align:center;' placeholder='" . number_format($row['qtdvol'],3,',','.') . "' /></td>";
+					echo "<td>" . $row['tipo'] . "</td>";
+					echo "<td><input type='text' size='6' maxlength='6' pattern='\d+(,\d{0,2})?' onchange='ChangeOC(" . $row['id_ocitem'] . ",3,this);' style='text-align:center;' placeholder='" . number_format($row['custo'],2,',','.') . "' /></td>";
+					echo "<td><input type='button' title='Ver Última Compra' value='$' onclick=\"TINY.box.show({url:'saida_produto.php',opacity:20,topsplit:3, post: 'id_produto=" . $row['id_produto'] . "'})\" />";
+				}
+
+				echo "<input type='button' title='Apagar Item' onclick='DelItemOC(" . $_POST['id'] . "," . $row['id_ocitem'] . ")' value='x' /></td>";
+				echo "</tr>";
+
+			} while ($row=$rs->fetch_assoc());
+			
+			echo "</table>";
+		} else {
+			echo "Não há itens na Ordem de Compra.";
+		}
+	}
+}
+$cn->close();
+?>

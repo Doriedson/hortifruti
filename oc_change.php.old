@@ -1,0 +1,36 @@
+﻿<?php
+
+include "cn.php";
+
+switch( $_POST['id'] ) {
+
+	case 1:
+		$sql="update tab_ordemcompraitem set vol1=" . str_replace(',','.',$_POST['valor']) . " where id_ocitem=" . $_POST['item'];
+		$str = number_format($_POST['valor'],3,",",".");
+		break;
+
+	case 2:
+		$sql="update tab_ordemcompraitem set vol2=" . str_replace(',','.',$_POST['valor']) . " where id_ocitem=" . $_POST['item'];
+		$str = number_format($_POST['valor'],3,",",".");
+		break;
+
+	case 3:
+		$sql="update tab_ordemcompraitem set custo=" . str_replace(',','.',$_POST['valor']) . " where id_ocitem=" . $_POST['item'];
+		$str = number_format($_POST['valor'],2,",",".");
+		break;
+
+	case 4:
+		$sql="update tab_ordemcompraitem set qtdvol=" . str_replace(',','.',$_POST['valor']) . " where id_ocitem=" . $_POST['item'];
+		$str = number_format($_POST['valor'],3,",",".");
+		break;
+
+}
+
+if ( $cn->query($sql) ) {
+	echo $str;
+} else {
+	echo "erro";
+}
+
+$cn->close();
+?>

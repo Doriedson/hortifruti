@@ -1,0 +1,180 @@
+html {
+/*	width: 940px;
+	height:100%;
+*/	background: #f0f0f0;
+}
+
+body {
+	font: 13px Helvetica, Arial, sans-serif;
+	margin: 40px 0 30px;
+}
+
+h1 {
+	margin:2;
+	font-size: 13px;
+	font-weight: normal;
+	color: gray;
+}
+
+input {
+	font-size: 13px;
+	border: 1px solid #aaaaaa;
+}
+
+/*
+::-webkit-input-placeholder { color:rgba(0,100,0,0.5); }
+::-moz-placeholder { color:#f00; } 
+:-ms-input-placeholder { color:#f00; }
+input:-moz-placeholder { color:#f00; }
+*/
+
+#content {
+	padding:0 10px;
+}
+
+.green {
+	color:#008800;
+}
+
+.red {
+	color:#cd202c;
+}
+
+header{
+	position:fixed;
+	top:0;	
+	width:100%;
+	margin:0;
+	padding:0;
+	left:0;
+	border-bottom: 1px solid #d0d0d0;
+	background-color: #e5e5e5;
+	height:30px;
+}
+
+footer{
+	position:fixed;
+	bottom:0;
+	width:100%;
+	margin:0;
+	padding:0 10px;
+	left:0;
+	height:30px;
+	line-height:30px;
+	text-align:left;
+	border-top: 1px solid #d0d0d0;
+	background: #e5e5e5;
+	color:gray;
+}
+
+thead {
+	color:#666666;
+}
+
+table {
+	border-collapse:collapse;
+}
+
+table td, table th {
+	padding: 5px 5px;
+}
+
+table tfoot {
+	color:#cd202c;
+	font-weight: bold;
+}
+
+table tbody tr:nth-child(odd) {background: #e0e0e0} /*rgba(200,200,200,.3)}*/
+
+/*table tbody tr:nth-child(even) {background: #ffffff}*/
+
+table tbody tr:hover {
+	background: #d7d7d7;
+} /*rgba(200,200,200,.3)}*/
+
+.erro {
+	display:none;
+	color:#CD0000;
+}
+
+nav {
+	height:30px;
+	line-height:30px;
+}
+
+nav ul {
+	display:block;
+	list-style:none;
+	margin:0;
+	padding-left:0;
+}
+
+nav a {
+	display: block;
+	padding: 5px 10px;
+	line-height: 20px;
+	text-decoration: none;
+}
+
+nav ul li {
+	float:left;
+	position:relative;
+}
+
+nav a:visited,
+nav a {
+	color:black;
+}
+
+.disable {
+	display: block;
+	padding: 5px 10px;
+	color: #bbb;
+	cursor: default;
+	width: 150px;
+}
+
+nav ul ul a {
+	border-bottom: 1px dotted #ddd;
+
+	font-weight: normal;
+	height: auto;
+	width: 150px;
+}
+
+nav ul ul {
+	border: 1px solid #d0d0d0;
+	background: #e5e5e5;
+	display:none; 
+	float:left;
+	margin:0;
+	position:absolute;
+	left:0;
+	top: 30px;
+/*	width: 188px;*/
+	z-index: 99999;
+}
+/*
+nav ul li:hover > ul {
+	display:block;
+}*/
+
+nav ul li:hover > a {
+	background: #f9f9f9;
+	outline: 1px solid #d0d0d0;
+}
+
+.divrelatorio {
+	display:inline-block;
+	padding: 5px 10px;
+	vertical-align: top;
+}
+
+.etiqueta {
+	display:inline-block;
+	width:320px;
+}
+/*.site{
+	margin: 0 auto;
+	width: 980px;
+}*/

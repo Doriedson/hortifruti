@@ -1,0 +1,67 @@
+﻿<?php
+if( !isset($_SESSION) ) {
+	session_start();
+}
+
+include "cn.php";
+
+if( isset( $_POST['id_oc'] ) ) {
+
+	$sql="update tab_ordemcompra set descricao='" . $_POST['descricao'] . "', obs='" . $_POST['obs'] . "', data='" . $_POST['data'] . " 00:00:00' where id_oc=" . $_POST['id_oc'];
+
+	$cn->query($sql);
+	
+	echo "Alteração de Ordem de Compra: " . $_POST['descricao'] . " (" . date('d/m/Y H:i:s') . ")";
+
+	$cn->close();
+	return;
+}
+
+if (isset ($_POST['data']) ){
+
+	$sql="insert into tab_ordemcompra (descricao,data,obs,id_entidade) values ('" . $_POST['descricao'] . "','" . $_POST['data'] . " 00:00:00','" . $_POST['obs'] . "'," . $_SESSION['id'] . ")";
+
+	if ( $rs=$cn->query($sql) ) {
+		$sql="SELECT LAST_INSERT_ID() as id";
+		if ( $rs=$cn->query($sql) ) {
+			$row=$rs->fetch_assoc();
+			echo $row['id'];
+		}
+	}
+
+	$cn->close();
+	return;
+}
+
+if (isset ($_POST['id']) ){
+	$sql="select * from tab_ordemcompra where id_oc=" . $_POST['id'];
+
+	if ( $rs=$cn->query($sql) ) {
+		$row=$rs->fetch_assoc();
+	
+		?>
+		<h1>:: Alteração de Ordem de Compra</h1>
+
+		<form method="post" onsubmit="return EditOC();">
+			<input type="hidden" id="id_oc" value="<?php echo $row['id_oc']; ?>" />
+			<input type="date" id="data" size="10" value="<? echo date_format( date_create($row['data']), 'Y-m-d'); ?>" required /><br />
+			<input type="text" id="descricao" value="<?php echo $row['descricao']; ?>" placeholder="Descrição" autofocus required pattern="[A-Z a-z0-9]+" size="50" maxlength="100" /><br />
+			<input type="text" id="obs" value="<?php echo $row['obs']; ?>" placeholder="Observação" pattern="[A-Z a-z0-9]+" size="50" maxlength="255" /><br />
+			<input type="submit" value="Salvar" />
+		</form>
+		<?php
+	}
+	$cn->close();
+} else {
+?>
+	<h1>:: Nova Ordem de Compra</h1>
+
+	<form method="post" onsubmit="return NovaOC();">
+		<input type="date" id="data" size="10" value="<? echo date('Y-m-d'); ?>" required /><br />
+		<input type="text" id="descricao" placeholder="Descrição" autofocus required pattern="[A-Z a-z0-9]+" size="50" maxlength="100" /><br />
+		<input type="text" id="obs" placeholder="Observação" pattern="[A-Z a-z0-9]+" size="50" maxlength="255" /><br />
+		<input type="submit" value="Cadastrar" />
+	</form>
+<?php
+}
+?>
