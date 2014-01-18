@@ -19,6 +19,8 @@ include "funcoes.php";
 
 <h1>:: Ordens de Compra</h1>
 
+<div id='oc_grafico' style="position:absolute; float:right; align:right"></div>
+
 <div class="TabControl">
     <div id="head">
         <ul class="abas">

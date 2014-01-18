@@ -4,6 +4,7 @@ include "funcoes.php";
 
 ?>
 <h1>:: Lista de Ordens de Compra em Aberto (<input type='button' onclick="TINY.box.show({url:'nova_oc.php',opacity:20,topsplit:3});" value='Nova OC' />)</h1>
+
 <?php
 
 if( isset($_POST['close_oc']) ) {
