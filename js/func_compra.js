@@ -8,6 +8,82 @@ function OC(id_oc){
 
 }
 
+function GraficoES(id_produto){
+
+	$("#oc_grafico").html("");
+
+	$.post("saida_produto.php", { id_produto: id_produto }, function(data) {
+		refresh();
+
+		var obj = jQuery.parseJSON(data);
+console.log(data);
+		var plot2 = $.jqplot ('oc_grafico', [ obj.entrada, obj.saida, obj.saida2 ], {
+		      // Give the plot a title.
+	    	title: obj.produto,
+		      //series:[{renderer:$.jqplot.BarRenderer}],
+		    seriesColors: ['#5FAB78', '#DDDD00', '#FF6600'],
+
+			series:[ 
+				{
+					label: 'Compras'
+				},
+				{
+					label: 'Vendas'
+				},
+				{
+					label: 'Vendas Acumuladas'
+				}
+		   //        {
+		   //          // Change our line width and use a diamond shaped marker.
+		   //          lineWidth:2, 
+		   //          markerOptions: { style:'dimaond' }
+		   //        }, 
+		   //        {
+		   //          // Don't show a line, just show markers.
+		   //          // Make the markers 7 pixels with an 'x' style
+		   //          showLine:false, 
+		   //          markerOptions: { size: 7, style:"x" }
+		   //        }	    
+	        ],  
+		      // You can specify options for all axes on the plot at once with
+		      // the axesDefaults object.  Here, we're using a canvas renderer
+		      // to draw the axis label which allows rotated text.
+		      // axesDefaults: {
+		      // 	labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+		      // },
+		      // An axes object holds options for all axes.
+		      // Allowable axes are xaxis, x2axis, yaxis, y2axis, y3axis, ...
+		      // Up to 9 y axes are supported.
+		    axes: {
+		     	xaxis:{
+		      		renderer:$.jqplot.DateAxisRenderer,
+		      		tickOptions:{ formatString:'%#d&nbsp;%b' },
+		      	},
+		        // options for each axis are specified in seperate option objects.
+		        // xaxis: {
+		        //   label: "X Axis",
+		        //   // Turn off "padding".  This will allow data point to lie on the
+		        //   // edges of the grid.  Default padding is 1.2 and will keep all
+		        //   // points inside the bounds of the grid.
+		        //   pad: 0
+		        // },
+		        yaxis: {
+		        	//label: obj.tipo,
+		        	tickOptions:{ formatString:'%.3f ' + obj.tipo }
+		        }
+		    },
+		    highlighter: {
+		    	show: true,
+		    	sizeAdjust: 7.5
+		    },
+		    cursor: {
+		    	show:false
+		    },
+		    legend: { show:true, location:'se' }
+		});
+	});
+}
+
 function addTabOC(obj){
 
 	if($("#tab_compra tbody tr").length==0)

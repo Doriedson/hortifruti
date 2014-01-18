@@ -7,6 +7,7 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" type="text/css" href="css/styletiny.css" />
+		<link rel="stylesheet" type="text/css" href="plugins/jquery.jqplot.min.css" />
 
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/tinybox.js"></script>
@@ -15,8 +16,13 @@
 		<script type="text/javascript" src="js/func_despesa.js"></script>
 		<script type="text/javascript" src="js/func_compra.js"></script>
 
-		<script type="text/javascript" src="plugins/jqplot.canvasTextRenderer.min.js"></script>
-		<script type="text/javascript" src="plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+		<script type="text/javascript" src="plugins/jquery.jqplot.min.js"></script>
+		<!--script type="text/javascript" src="plugins/jqplot.canvasTextRenderer.min.js"></script>
+		<script type="text/javascript" src="plugins/jqplot.canvasAxisLabelRenderer.min.js"></script-->
+		<script type="text/javascript" src="plugins/jqplot.dateAxisRenderer.min.js"></script>
+		<!--script type="text/javascript" src="plugins/jqplot.barRenderer.min.js"></script-->
+		<script type="text/javascript" src="plugins/jqplot.highlighter.min.js"></script>
+		<script type="text/javascript" src="plugins/jqplot.cursor.min.js"></script>
 
 	<!--	<?php include "tema.php"; ?>
 		<link rel="stylesheet" type="text/css" href="css/print.css" media="print" />

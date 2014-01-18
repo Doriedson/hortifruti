@@ -252,7 +252,7 @@ if($action=='lista'){
 
 	$result2 .= "<li>
                 <div class='aba'>
-					<img height='10px' width='10px' class='closeOC' /><span> " . date_format( date_create($row['data']), 'd/m/Y') . " - " . $row['descricao'] . "</span>
+					<img height='10px' width='10px' src='img/close.png' class='closeOC' /><span> " . date_format( date_create($row['data']), 'd/m/Y') . " - " . $row['descricao'] . "</span>
                 </div>
             </li>";
 	
@@ -286,13 +286,13 @@ if($action=='lista'){
 
 			do {
 				$result .= "<tr><td>" . $row['produto'] . "</td>
-								<td><input type='number' id='vol' min='0' max='999.999' step='0.001' size='7' maxlength='7' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['vol1'],3,',','.') . "' /></td>
-								<td>x <input type='number' id='qtdvol' min='0' max='999.999' step='0.001' size='7' maxlength='7' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['qtdvol'],3,',','.') . "' /></td>
+								<td><input type='text' onfocus='GraficoES(" . $row['id_produto'] . ")' id='vol' min='0' max='999.999' step='0.001' size='7' maxlength='7' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['vol1'],3,',','.') . "' /></td>
+								<td>x <input type='text' id='qtdvol' min='0' max='999.999' step='0.001' size='7' maxlength='7' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['qtdvol'],3,',','.') . "' /></td>
 								<td align='center'>" . $row['tipo'] . "</td>
-								<td><input type='number' id='custo' min='0' max='999.99' step='0.01' size='6' maxlength='6' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['custo'],2,',','.') . "' /></td>
+								<td><input type='text' id='custo' min='0' max='999.99' step='0.01' size='6' maxlength='6' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['custo'],2,',','.') . "' /></td>
 								<td>
 									<input type='hidden' value='" . $row['id_ocitem'] . "' />
-									<input type='button' title='Ver Última Compra' value='$' onclick=\"TINY.box.show({url:'saida_produto.php',opacity:20,topsplit:3, post: 'id_produto=" . $row['id_produto'] . "'})\" />
+									<input type='button' title='Ver Última Compra' value='$' onclick='GraficoES(" . $row['id_produto'] . ")' />
 									$btDelItem
 								</td>
 							</tr>";
@@ -332,13 +332,13 @@ if($action=='lista'){
 
 			$result .= "<tr>
 					<td>$produto</td>
-					<td><input type='number' id='vol' min='0' max='999.999' step='0.001' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='0,000' /></td>
-					<td>x <input type='number' id='qtdvol' min='0' max='999.999' step='0.001' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($qtd,3,',','.') . "' /></td>
+					<td><input type='text' onfocus='GraficoES($id_produto)' id='vol' min='0' max='999.999' step='0.001' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='0,000' /></td>
+					<td>x <input type='text' id='qtdvol' min='0' max='999.999' step='0.001' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($qtd,3,',','.') . "' /></td>
 					<td align='center'>$tipo</td>
-					<td><input type='number' id='custo' min='0' max='999.99' step='0.01'  size='6' maxlength='6' pattern='\d+(,\d{0,2})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='0,00' /></td>
+					<td><input type='text' id='custo' min='0' max='999.99' step='0.01'  size='6' maxlength='6' pattern='\d+(,\d{0,2})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='0,00' /></td>
 					<td>
 						<input type='hidden' value='" . $cn->insert_id . "' />
-						<input type='button' title='Ver Última Compra' value='$' onclick=\"TINY.box.show({url:'saida_produto.php',opacity:20,topsplit:3, post: 'id_produto=$id_produto'})\" />
+						<input type='button' title='Ver Última Compra' value='$' onclick='GraficoES($id_produto)' />
 						$btDelItem
 					</td>
 					</tr>";
