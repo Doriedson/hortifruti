@@ -79,7 +79,11 @@ console.log(data);
 		    cursor: {
 		    	show:false
 		    },
-		    legend: { show:true, location:'se' }
+		    legend: { 
+		    	show:true, 
+		    	location: 'e',
+		    	rendererOptions: {placement: "outsideGrid"},
+		    }
 		});
 	});
 }
