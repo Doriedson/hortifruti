@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="js/funcoes.js"></script>
 		<script type="text/javascript" src="js/func_despesa.js"></script>
 		<script type="text/javascript" src="js/func_compra.js"></script>
+		<script type="text/javascript" src="js/func_cad_cliente.js"></script>
 
 		<script type="text/javascript" src="plugins/jquery.jqplot.min.js"></script>
 		<!--script type="text/javascript" src="plugins/jqplot.canvasTextRenderer.min.js"></script>

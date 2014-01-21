@@ -259,7 +259,7 @@ if($action=='lista'){
 	$result .= "<div class='conteudo'>
 				<form method='post' onsubmit='return addItemOC(this);' >
 					<input type='hidden' id='id' value='$id_oc' />
-					<input type='text' id='id_produto' size='13' maxlength='13' required autofocus placeholder='Código Produto' pattern='\d+' />
+					<input type='number' id='id_produto' size='13' maxlength='13' min='0' max='9999999999999' step='1' required autofocus placeholder='Código Produto' pattern='\d+' />
 					<input type='submit' value='adicionar' />
 					<input type='button' value='listas' onclick='AddLista(this);' />
 				</form>
@@ -286,10 +286,10 @@ if($action=='lista'){
 
 			do {
 				$result .= "<tr><td>" . $row['produto'] . "</td>
-								<td><input type='text' onfocus='GraficoES(" . $row['id_produto'] . ")' id='vol' min='0' max='999.999' step='0.001' size='7' maxlength='7' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['vol1'],3,',','.') . "' /></td>
-								<td>x <input type='text' id='qtdvol' min='0' max='999.999' step='0.001' size='7' maxlength='7' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['qtdvol'],3,',','.') . "' /></td>
+								<td><input type='number' onfocus='GraficoES(" . $row['id_produto'] . ")' id='vol' min='0' max='999.999' step='0.001' size='7' maxlength='7' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['vol1'],3,',','.') . "' /></td>
+								<td>x <input type='number' id='qtdvol' min='0' max='999.999' step='0.001' size='7' maxlength='7' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['qtdvol'],3,',','.') . "' /></td>
 								<td align='center'>" . $row['tipo'] . "</td>
-								<td><input type='text' id='custo' min='0' max='999.99' step='0.01' size='6' maxlength='6' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['custo'],2,',','.') . "' /></td>
+								<td><input type='number' id='custo' min='0' max='999.99' step='0.01' size='6' maxlength='6' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($row['custo'],2,',','.') . "' /></td>
 								<td>
 									<input type='hidden' value='" . $row['id_ocitem'] . "' />
 									<input type='button' title='Ver Última Compra' value='$' onclick='GraficoES(" . $row['id_produto'] . ")' />
@@ -332,10 +332,10 @@ if($action=='lista'){
 
 			$result .= "<tr>
 					<td>$produto</td>
-					<td><input type='text' onfocus='GraficoES($id_produto)' id='vol' min='0' max='999.999' step='0.001' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='0,000' /></td>
-					<td>x <input type='text' id='qtdvol' min='0' max='999.999' step='0.001' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($qtd,3,',','.') . "' /></td>
+					<td><input type='number' onfocus='GraficoES($id_produto)' id='vol' min='0' max='999.999' step='0.001' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='0,000' /></td>
+					<td>x <input type='number' id='qtdvol' min='0' max='999.999' step='0.001' size='7' maxlength='7' pattern='\d+(,\d{0,3})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='" . number_format($qtd,3,',','.') . "' /></td>
 					<td align='center'>$tipo</td>
-					<td><input type='text' id='custo' min='0' max='999.99' step='0.01'  size='6' maxlength='6' pattern='\d+(,\d{0,2})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='0,00' /></td>
+					<td><input type='number' id='custo' min='0' max='999.99' step='0.01'  size='6' maxlength='6' pattern='\d+(,\d{0,2})?' onchange='ChangeOCI(this);' style='text-align:center;' placeholder='0,00' /></td>
 					<td>
 						<input type='hidden' value='" . $cn->insert_id . "' />
 						<input type='button' title='Ver Última Compra' value='$' onclick='GraficoES($id_produto)' />

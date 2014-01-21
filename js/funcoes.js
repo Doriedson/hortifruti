@@ -195,27 +195,6 @@ function NovoProduto() {
 	return false;
 }
 
-function CadCli() {
-
-//	$("#produtoerro").hide();
-//	$("#produtoerro").html("");
-	$.post("cad_cliente.php", { codigo: $("#codigo").val(), cpf: $("#cpf").val(), nome: $("#nome").val(), prazo: $("#prazo").attr('checked'), endereco: $("#endereco").val(), bairro: $("#bairro").val(), cidade: $("#cidade").val(), telefone: $("#telefone").val(), obs: $("#obs").val(), limite: $("#limite").val()  }, function(data) {
-		refresh();
-		$("#content").html(data);
-	});
-
-	return false;
-}
-
-function EditCli(codigo) {
-
-	$.post("cad_cliente.php", { codigo: codigo }, function(data) {
-		refresh();
-		$("#content").html(data);
-	});
-
-}
-
 function Logout() {
 	clearInterval(timeCount);
 

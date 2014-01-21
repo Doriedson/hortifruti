@@ -28,8 +28,40 @@ input {
 input:-moz-placeholder { color:#f00; }
 */
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
 
+fieldset {
+	margin: 0; padding: 0; border: 0; outline: none;
+}
 
+#frm_cad_cliente {
+	width: 300px;
+}
+
+#frm_cad_cliente input[type="text"], input[type="number"] {
+	width: 150px;
+	margin: 3px;
+	padding: 1px 5px;
+}
+
+#frm_cad_cliente input[type="checkbox"] {
+	margin: 9px 140px 9px 4px;
+}
+
+#frm_cad_cliente input[type="submit"] {
+	float: right;
+}
+
+#frm_cad_cliente label {
+	float: left; clear: left; margin: 5px 10px 5px 0; width: 100px;
+	text-align: right; color: #666666;
+	/*text-transform: uppercase;*/ text-shadow: 0px 1px 0px #f2f2f2;
+}
 /*------------------------------------------------------------------------------*/
 
 /*body{font-family:Calibri, Tahoma, Arial}*/

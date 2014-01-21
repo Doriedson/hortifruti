@@ -43,7 +43,7 @@
 		<ul>
 			<?php 
 			if($_SESSION['cadcli']==1) { 
-				echo "<li><a href='cad_cliente.php'>Novo Cadastro</a></li>";
+				echo "<li><a href='frm_cad_cliente.php'>Novo Cadastro</a></li>";
 			} else {
 				echo "<span class='disable'>Novo Cadastro</span>";
 			}
