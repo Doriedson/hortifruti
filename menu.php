@@ -42,14 +42,8 @@
 	<li><a href="#">Cliente / Funcionário</a>
 		<ul>
 			<?php 
-			if($_SESSION['cadcli']==1) { 
-				echo "<li><a href='frm_cad_cliente.php'>Novo Cadastro</a></li>";
-			} else {
-				echo "<span class='disable'>Novo Cadastro</span>";
-			}
-
 			if($_SESSION['showcli']==1) { 
-				echo "<li><a href='clientes.php'>Lista</a></li>";
+				echo "<li><a href='frm_cliente.php'>Lista</a></li>";
 			} else {
 				echo "<span class='disable'>Lista</span>";
 			}

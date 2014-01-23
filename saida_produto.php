@@ -9,10 +9,10 @@ $saida = array();
 $saida2 = array();
 $produto = "";
 $tipo = "";
-$totalS = 0;
+$totalC = 0;
+$totalV = 0;
 
 $sql="select * from tab_estent inner join tab_produto on tab_produto.id_produto=tab_estent.id_produto where tab_estent.id_produto=$id_produto order by tab_estent.data desc limit 1";
-
 
 
 if ($rs=$cn->query($sql)) {
@@ -28,17 +28,21 @@ if ($rs=$cn->query($sql)) {
 		$produto = $row['produto'];
 		$tipo = $row['tipo'];
 
-		array_push( $entrada, array( date_format( date_create($row['data']), 'Y-m-d') , $row['vol'] * $row['qtdvol'] ) );
-		
-		$sql="select sum(tab_vendaitem.qtd) as qtd, tab_venda.data from tab_vendaitem inner join tab_venda on tab_venda.id_venda=tab_vendaitem.id_venda where tab_vendaitem.id_produto=$id_produto and tab_venda.data between '" . date_format( date_create($row['data']), 'Y-m-d H:i:s') . "' and now() group by year(tab_venda.data), month(tab_venda.data), day(tab_venda.data) order by tab_venda.data";
+		//do {
+			array_push( $entrada, array( date_format( date_create($row['data']), 'Y-m-d') , $row['vol'] * $row['qtdvol'] ) );
+			$data = $row['data'];
+
+		//} while ( $row=$rs->fetch_assoc() );
+
+		$sql="select sum(tab_vendaitem.qtd) as qtd, tab_venda.data from tab_vendaitem inner join tab_venda on tab_venda.id_venda=tab_vendaitem.id_venda where tab_vendaitem.id_produto=$id_produto and tab_venda.data between '" . date_format( date_create($data), 'Y-m-d H:i:s') . "' and now() group by year(tab_venda.data), month(tab_venda.data), day(tab_venda.data) order by tab_venda.data";
 
 		if ($rs=$cn->query($sql)) {
 			if ( $row=$rs->fetch_assoc() ) {
 				do {
 					// echo "<tr><td>Saída:</td><td>" . number_format($row['qtd'],3,',','.') . " $tipo</td></tr>";
-					$total += $row['qtd'];
+					$totalV += $row['qtd'];
 					array_push( $saida, array( date_format( date_create($row['data']), 'Y-m-d'), $row['qtd']+0 ) );
-					array_push( $saida2, array( date_format( date_create($row['data']), 'Y-m-d'), $total ) );
+					array_push( $saida2, array( date_format( date_create($row['data']), 'Y-m-d'), $totalV ) );
 
 				} while ( $row=$rs->fetch_assoc() );
 			}

@@ -10,13 +10,14 @@ function OC(id_oc){
 
 function GraficoES(id_produto){
 
-	$("#oc_grafico").html("");
+	$("#oc_grafico").html("<img id='centro' src='img/load.gif'>");
 
 	$.post("saida_produto.php", { id_produto: id_produto }, function(data) {
 		refresh();
+		$("#oc_grafico").html("");
 
 		var obj = jQuery.parseJSON(data);
-console.log(data);
+//console.log(data);
 		var plot2 = $.jqplot ('oc_grafico', [ obj.entrada, obj.saida, obj.saida2 ], {
 		      // Give the plot a title.
 	    	title: obj.produto,
